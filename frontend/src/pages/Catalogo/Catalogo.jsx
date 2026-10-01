@@ -1,21 +1,71 @@
-import React from "react"
-import './Catalogo.css'
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../Inventario/Inventario.css";
+import Tablas from "../../components/Tablas/Tablas";
+import { getCategorias, getProductos } from "../../api/productos";
 
 const Catalogo = () => {
-  return (
-    <>
-      <div className="inventario-container">
-        <div className="header-inventario">
-          <h1 className="titulo-izq">Sistema de gestión de Stock</h1>
+  const navigate = useNavigate();
+  const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [categoria, setCategoria] = useState("");
+  const [busqueda, setBusqueda] = useState("");
+  const [error, setError] = useState("");
 
-          <div className="search-box">
-            <input type="text" placeholder="Buscar producto..." />
-            <button>Buscar</button>
-          </div>
-        </div>
+  const cargar = async (q = busqueda, cat = categoria) => {
+    try {
+      setProductos(await getProductos({ q, categoria: cat }));
+      setError("");
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
+  useEffect(() => {
+    getCategorias().then(setCategorias).catch(() => {});
+    cargar("", "");
+  }, []);
+
+  useEffect(() => {
+    cargar(busqueda, categoria);
+  }, [categoria]);
+
+  return (
+    <div className="inventario-container">
+      <div className="header-inventario">
+        <h1 className="titulo-izq">Catálogo por categoría</h1>
+        <form className="search-box" onSubmit={(e) => { e.preventDefault(); cargar(); }}>
+          <input
+            type="text"
+            placeholder="Buscar producto..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+          />
+          <button type="submit">Buscar</button>
+        </form>
       </div>
-    </>
+      <div className="table-content-wrapper">
+        {error && <p className="text-danger">{error}</p>}
+        <div className="filtros-inventario">
+          <button className={`filtro-btn ${categoria === "" ? "activo" : ""}`} onClick={() => setCategoria("")}>Todas</button>
+          {categorias.map((c) => (
+            <button
+              key={c}
+              className={`filtro-btn ${categoria === c ? "activo" : ""}`}
+              onClick={() => setCategoria(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <Tablas
+          productos={productos}
+          onRefresh={() => cargar()}
+          onAgregar={() => navigate("/nuevo-producto")}
+        />
+      </div>
+    </div>
   );
 };
 
-export default Catalogo
+export default Catalogo;

@@ -1,8 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Administracion.css";
-
 const Administracion = () => {
   //Navigate permite navegar en las paginas en react
   const navigate = useNavigate();

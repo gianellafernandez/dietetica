@@ -16,12 +16,21 @@
 .nuevo-producto-container {
   display: flex;
   flex-direction: column;
-  align-items: center;     
-  justify-content: center;  
-  height: calc(100vh - 64px); /* resta la altura aprox. del header-inventario */
+  align-items: center;
+  justify-content: flex-start;
+  min-height: calc(100vh - 64px);
   padding: 20px;
   box-sizing: border-box;
-  overflow: hidden;
+}
+
+.form-error {
+  color: #b91c1c;
+  margin: 0;
+}
+
+.form-ok {
+  color: #15803d;
+  margin: 0;
 }
 
 .card-header {
@@ -51,7 +60,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 1;
+  flex: 1 1 220px;
 }
 
 .campo-grupo label {
@@ -72,6 +81,7 @@
 
 .campos-form {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   width: 100%;
 }

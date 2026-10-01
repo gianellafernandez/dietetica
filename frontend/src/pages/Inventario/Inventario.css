@@ -60,3 +60,26 @@ h1.titulo-izq {
 .table-content-wrapper {
   padding: 20px;
 }
+
+.filtros-inventario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filtro-btn {
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: rgb(15, 76, 129);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filtro-btn.activo {
+  background: rgb(15, 76, 129);
+  color: white;
+  border-color: rgb(15, 76, 129);
+}

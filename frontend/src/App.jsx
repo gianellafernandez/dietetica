@@ -25,6 +25,7 @@ function App() {
             <Route path='/' element={<Navigate to="/inventario" />} />
             <Route path='/inventario' element={<Inventario />} />
             <Route path='/nuevo-producto' element={<NuevoProducto />} />
+            <Route path='/nuevo-producto/:id' element={<NuevoProducto />} />
             <Route path='/ver-todo' element={<Productos />} />
             <Route path='/catalogo' element={<Catalogo />} />
             <Route path='/movimientos' element={<Movimientos />} />
